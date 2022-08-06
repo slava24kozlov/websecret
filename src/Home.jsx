@@ -13,8 +13,10 @@ function Home({products}) {
 
       <main className={styles.main}>
         <div className={styles.control}>
-          <span>Товаров {products.length}</span>
-          <h1>Камеры</h1>
+          <div className={styles.heading}>
+            <h1>Камеры</h1>
+            <span>Товаров {products.length}</span>
+          </div>
           <h2 id="price" aria-label="сортировка по цене">Цена, ₽</h2>
           <div className={styles.pricesGroup}>
             <input aria-labelledby="price" name="min value" type="number" min="0" value="0"/>
@@ -34,19 +36,6 @@ function Home({products}) {
           ))}
         </div>
       </main>
-
-      {/*<footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16}/>
-          </span>
-        </a>
-      </footer>*/}
     </div>
   )
 }

@@ -3,10 +3,12 @@
 Test task for WebSecret company
 
 ```bash
-Author: Slava Kozlov (slava24kozlov@gmail.com)
+Author: Slava Kozlov (slava24kozlov@gmail.com).
+Stack: React, Next.js, HTML, CSS/SCSS, JavaScript.
+Goal: to design and write the logic for the filter.
+Completed: Implemented the site according to the layout in Figma for mobile, tablet and desktop. Added the ability to filter by brand and price.
+What would do: Decrease the number of requests (debounce, memo, data caching, web storage)
 
-Stack: React, Next.js, HTML, CSS/SCSS, JavaScript
-The purpose of the task: to demonstrate quality layout, independence, depth of knowledge, as well as the desire to make the project better.
 ```
 
 ## References

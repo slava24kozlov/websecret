@@ -42,7 +42,7 @@ function Home({products, filters}) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Web Secret App</title>
         <meta name="description" content="Generated page for the test task "/>
         <link rel="icon" href="/favicon.ico"/>
       </Head>

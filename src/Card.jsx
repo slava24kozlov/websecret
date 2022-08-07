@@ -22,7 +22,7 @@ const Card = ({image, title, price, isNew, isStock}) => {
           <div className={styles.lowerPart}>
             <button>{isStock ? "В корзину" : "Оставить заявку"}</button>
             <button onClick={handleChangeLike}>
-              <svg width="20" height="17" viewBox="0 0 20 17" fill={isActiveLike ? "red" : "#fff"} stroke="currentColor"
+              <svg width="20" height="17" viewBox="0 0 20 17" fill={isActiveLike ? "red" : "white"} stroke={isActiveLike ? "red" : "currentColor"}
                    xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M2.335 9.106h0a4.792 4.792 0 116.828-6.708l.597.667.596-.667a4.792 4.792 0 116.828 6.708l-7.424 6.88-7.425-6.88z"

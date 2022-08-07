@@ -5,7 +5,7 @@ export default function HomePage({products, filters}) {
 };
 
 export async function getStaticProps() {
-  const res = await fetch("https://getlens-master.stage.dev.family/api/pages/obektivy");
+  const res = await fetch(process.env.NEXT_PUBLIC_URL);
   const {products, filters} = await res.json();
   return {
     props: {products, filters},

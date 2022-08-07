@@ -1,13 +1,13 @@
 import Home from "../src/Home";
 
-export default function HomePage({products}) {
-  return <Home products={products}/>
+export default function HomePage({products, filters}) {
+  return <Home products={products} filters={filters}/>
 };
 
 export async function getStaticProps() {
   const res = await fetch("https://getlens-master.stage.dev.family/api/pages/obektivy");
-  const {products} = await res.json();
+  const {products, filters} = await res.json();
   return {
-    props: {products},
+    props: {products, filters},
   }
 }

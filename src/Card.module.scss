@@ -38,6 +38,9 @@
     img {
       position: absolute;
       top: 0;
+      &:hover {
+        box-shadow: 0 0 70px 10px rgba(34, 60, 80, 0.3);
+      }
     }
   }
 
@@ -71,10 +74,29 @@
       align-items: center;
 
       button {
-        border: 1px solid #DBDBDB;
-        border-radius: 8px;
-        padding: 8px 15px;
-        font-size: 0.875rem;
+        cursor: pointer;
+        background-color: #FFFFFF;
+
+        &:first-child {
+          border: 1px solid #DBDBDB;
+          border-radius: 8px;
+          padding: 8px 15px;
+          font-size: 0.875rem;
+
+          &:hover {
+            border-color: black;
+          }
+        }
+
+        &:last-child {
+          padding: 0;
+          background-color: transparent;
+          border: none;
+
+          svg {
+            transition: fill 0.5s;
+          }
+        }
       }
     }
   }

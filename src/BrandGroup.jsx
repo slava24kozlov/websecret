@@ -2,10 +2,12 @@ import React, {useRef} from "react";
 import styles from "./BrandGroup.module.scss";
 import {API_BASE} from "../variables";
 
-const BrandGroup = ({setProductsList}) => {
+const BrandGroup = ({setProductsList, state, setState}) => {
   const refs = [useRef(), useRef()];
+
   const handleChange = () => {
     const checkedList = refs.filter(({current: {checked}}) => checked).map(({current: {name}}) => name === "canon" ? "1" : "9")
+    setState(prevState => ({...prevState, brand: checkedList}))
     fetch(`${API_BASE}${checkedList.length === 1 ? `?brands[]=${checkedList[0]}` : ""}`)
       .then(res => {
         if (res.status === 200) {

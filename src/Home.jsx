@@ -6,6 +6,11 @@ import PriceGroup from "./PriceGroup";
 import {useState} from "react";
 
 function Home({products, filters}) {
+  const [state, setState] = useState(
+    {
+      brand: null,
+      price: null
+    })
   const [productsList, setProductsList] = useState(() => products)
   return (
     <div className={styles.container}>
@@ -21,8 +26,16 @@ function Home({products, filters}) {
             <h1>Камеры</h1>
             <span>Товаров {productsList.length}</span>
           </div>
-          <PriceGroup min={filters[0]?.min} max={filters[0]?.max} setProductsList={setProductsList}/>
-          <BrandGroup setProductsList={setProductsList}/>
+          <PriceGroup min={Number(filters[0]?.min)}
+                      max={Number(filters[0]?.max)}
+                      setProductsList={setProductsList}
+                      state={state}
+                      setState={setState}
+          />
+          <BrandGroup setProductsList={setProductsList}
+                      state={state}
+                      setState={setState}
+          />
         </div>
         <div className={styles.content}>
           {productsList.map(({id, image, title, price, is_new, in_stock}) => (

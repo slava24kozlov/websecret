@@ -19,9 +19,9 @@ function Home({products, filters}) {
         <div className={styles.control}>
           <div className={styles.heading}>
             <h1>Камеры</h1>
-            <span>Товаров {products.length}</span>
+            <span>Товаров {productsList.length}</span>
           </div>
-          <PriceGroup min={filters[0]?.min} max={filters[0]?.max}/>
+          <PriceGroup min={filters[0]?.min} max={filters[0]?.max} setProductsList={setProductsList}/>
           <BrandGroup setProductsList={setProductsList}/>
         </div>
         <div className={styles.content}>

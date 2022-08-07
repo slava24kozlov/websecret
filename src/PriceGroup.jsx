@@ -1,29 +1,38 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import styles from "../styles/Home.module.scss";
 import {API_BASE} from "../variables";
 
-const PriceGroup = ({min = 1, max = 99999}) => {
+const PriceGroup = ({min = 1, max = 9999, setProductsList}) => {
   const [priceMin, setPriceMin] = useState(min)
   const [priceMax, setPriceMax] = useState(max)
 
-  const handleChange = (event) => {
-    const {target: {name, value}} = event
-    if (value >= min && value <= max) {
-      name === "min value" && setPriceMin(value)
-      name === "max value" && setPriceMax(value)
-    }
-  }
-
- /* useEffect(() => {
-    console.log("useEffect")
-    fetch(`${API_BASE}?price[min]=${priceMin}&price[max]=${priceMax}`).then(res => {
+  const requestPrice = (min, max) => {
+    fetch(`${API_BASE}?price[min]=${min}&price[max]=${max}`).then(res => {
       if (res.status === 200) {
         return res.json()
       }
     }).then(data => {
       setProductsList(data.products)
     }).catch(error => console.error(error))
-  }, [priceMin, priceMax])*/
+  }
+
+  const handleChange = (event) => {
+    const {target: {name, value}} = event
+    if (value >= Number(min) && value <= Number(max)) {
+      if (name === "min value") {
+        if (value <= priceMax) {
+          requestPrice(value, priceMax)
+          setPriceMin(value)
+        }
+      }
+      if (name === "max value") {
+        if (value >= priceMin) {
+          requestPrice(priceMin, value)
+          setPriceMax(value)
+        }
+      }
+    }
+  }
 
   return (
     <>

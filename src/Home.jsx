@@ -3,15 +3,42 @@ import Head from "next/head";
 import Card from "./Card";
 import BrandGroup from "./BrandGroup";
 import PriceGroup from "./PriceGroup";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {API_BASE} from "../variables";
 
 function Home({products, filters}) {
+  const min = Number(filters[0]?.min) || 1
+  const max = Number(filters[0]?.max) || 99999
+
   const [state, setState] = useState(
     {
-      brand: null,
-      price: null
+      start: false,
+      canon: false,
+      nikon: false,
+      minPrice: min,
+      maxPrice: max
     })
+
   const [productsList, setProductsList] = useState(() => products)
+
+  const requestAPI = () => {
+    const nikon = state.nikon ? "&brands[]=1" : "";
+    const canon = state.canon ? "&brands[]=9" : "";
+    const minPrice = state.minPrice > min ? `&price[min]=${state.minPrice}` : "";
+    const maxPrice = state.maxPrice < max ? `&price[max]=${state.maxPrice}` : "";
+      fetch(`${API_BASE}?${minPrice}${maxPrice}${nikon}${canon}`).then(res => {
+        if (res.status === 200) {
+          return res.json()
+        }
+      }).then(data => {
+        setProductsList(data.products)
+      }).catch(error => console.error(error))
+  }
+
+  useEffect(() => {
+    state.start && requestAPI()
+  }, [state])
+
   return (
     <div className={styles.container}>
       <Head>
@@ -26,15 +53,16 @@ function Home({products, filters}) {
             <h1>Камеры</h1>
             <span>Товаров {productsList.length}</span>
           </div>
-          <PriceGroup min={Number(filters[0]?.min)}
-                      max={Number(filters[0]?.max)}
-                      setProductsList={setProductsList}
+          <PriceGroup min={min}
+                      max={max}
                       state={state}
                       setState={setState}
+                      requestAPI={requestAPI}
           />
           <BrandGroup setProductsList={setProductsList}
                       state={state}
                       setState={setState}
+                      requestAPI={requestAPI}
           />
         </div>
         <div className={styles.content}>

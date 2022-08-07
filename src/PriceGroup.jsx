@@ -1,50 +1,25 @@
-import React, {useState} from "react";
+import React from "react";
 import styles from "../styles/Home.module.scss";
-import {API_BASE} from "../variables";
 
-const PriceGroup = ({min = 1, max = 9999, setProductsList, state, setState}) => {
-  const [priceMin, setPriceMin] = useState(min)
-  const [priceMax, setPriceMax] = useState(max)
-
-  const requestPrice = (min, max) => {
-    const brand = state.brand.length === 1 ? `&brands[]=${state.brand[0]}` : ""
-    fetch(`${API_BASE}?price[min]=${min}&price[max]=${max}${brand}`)
-      .then(res => {
-        if (res.status === 200) {
-          return res.json()
-        }
-      }).then(data => {
-      setProductsList(data.products)
-    }).catch(error => console.error(error))
-  }
-
+const PriceGroup = ({min, max, state, setState}) => {
   const handleChange = (event) => {
     const {target: {name, value}} = event
     if (value >= min && value <= max) {
       if (name === "min value") {
-        if (value <= priceMax) {
-          requestPrice(value, priceMax)
+        if (value <= state.maxPrice) {
           setState(prevState => ({
             ...prevState,
-            price: {
-              minimum: value,
-              maximum: priceMax
-            }
+            start: true,
+            minPrice: value
           }))
-          setPriceMin(value)
         }
-      }
-      if (name === "max value") {
-        if (value >= priceMin) {
-          requestPrice(priceMin, value)
+      } else {
+        if (value >= state.minPrice) {
           setState(prevState => ({
             ...prevState,
-            price: {
-              minimum: priceMin,
-              maximum: value
-            }
+            start: true,
+            maxPrice: value
           }))
-          setPriceMax(value)
         }
       }
     }
@@ -60,7 +35,7 @@ const PriceGroup = ({min = 1, max = 9999, setProductsList, state, setState}) => 
                type="number"
                min={min}
                max={max}
-               value={priceMin}
+               value={state.minPrice}
         />
         <input aria-labelledby="price"
                onChange={handleChange}
@@ -68,7 +43,7 @@ const PriceGroup = ({min = 1, max = 9999, setProductsList, state, setState}) => 
                type="number"
                min={min}
                max={max}
-               value={priceMax}
+               value={state.maxPrice}
         />
       </div>
     </>

@@ -1,4 +1,8 @@
 .brandGroup {
+  label:first-of-type {
+    margin-bottom: 10px;
+  }
+
   input {
     position: absolute;
     z-index: -1;

@@ -5,6 +5,7 @@ import BrandGroup from "./BrandGroup";
 import PriceGroup from "./PriceGroup";
 import {useEffect, useState} from "react";
 import {API_BASE} from "../variables";
+import {useDebounce} from "../hook/useDebounce";
 
 function Home({products, filters}) {
   const min = Number(filters[0]?.min) || 1
@@ -26,18 +27,20 @@ function Home({products, filters}) {
     const canon = state.canon ? "&brands[]=1" : "";
     const minPrice = state.minPrice > min ? `&price[min]=${state.minPrice}` : "";
     const maxPrice = state.maxPrice < max ? `&price[max]=${state.maxPrice}` : "";
-      fetch(`${API_BASE}?${minPrice}${maxPrice}${nikon}${canon}`).then(res => {
-        if (res.status === 200) {
-          return res.json()
-        }
-      }).then(data => {
-        setProductsList(data.products)
-      }).catch(error => console.error(error))
+    fetch(`${API_BASE}?${minPrice}${maxPrice}${nikon}${canon}`).then(res => {
+      if (res.status === 200) {
+        return res.json()
+      }
+    }).then(data => {
+      setProductsList(data.products)
+    }).catch(error => console.error(error))
   }
 
+  const stateDebounced = useDebounce(state, 1000)
+
   useEffect(() => {
-    state.start && requestAPI()
-  }, [state])
+    stateDebounced.start && requestAPI()
+  }, [stateDebounced])
 
   return (
     <div className={styles.container}>
@@ -57,12 +60,10 @@ function Home({products, filters}) {
                       max={max}
                       state={state}
                       setState={setState}
-                      requestAPI={requestAPI}
           />
           <BrandGroup setProductsList={setProductsList}
                       state={state}
                       setState={setState}
-                      requestAPI={requestAPI}
           />
         </div>
         <div className={styles.content}>

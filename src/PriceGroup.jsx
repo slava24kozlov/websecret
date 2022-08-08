@@ -6,7 +6,7 @@ const PriceGroup = ({min, max, state, setState}) => {
     const {target: {name, value}} = event
     if (value >= min && value <= max) {
       if (name === "min value") {
-        if (value <= state.maxPrice) {
+        if (value <= Number(state.maxPrice)) {
           setState(prevState => ({
             ...prevState,
             start: true,
@@ -14,7 +14,7 @@ const PriceGroup = ({min, max, state, setState}) => {
           }))
         }
       } else {
-        if (value >= state.minPrice) {
+        if (value >= Number(state.minPrice)) {
           setState(prevState => ({
             ...prevState,
             start: true,

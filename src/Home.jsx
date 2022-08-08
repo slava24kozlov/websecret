@@ -22,8 +22,8 @@ function Home({products, filters}) {
   const [productsList, setProductsList] = useState(() => products)
 
   const requestAPI = () => {
-    const nikon = state.nikon ? "&brands[]=1" : "";
-    const canon = state.canon ? "&brands[]=9" : "";
+    const nikon = state.nikon ? "&brands[]=9" : "";
+    const canon = state.canon ? "&brands[]=1" : "";
     const minPrice = state.minPrice > min ? `&price[min]=${state.minPrice}` : "";
     const maxPrice = state.maxPrice < max ? `&price[max]=${state.maxPrice}` : "";
       fetch(`${API_BASE}?${minPrice}${maxPrice}${nikon}${canon}`).then(res => {
